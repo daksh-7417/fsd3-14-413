@@ -1,3 +1,5 @@
+import { TIMEOUT } from "node:dns";
+
 const f1 = () => {
   console.log("f1 starts");
   f2();
@@ -20,4 +22,11 @@ function main() {
   f1();
   console.log("end main");
 }
-main();
+main(); // javascript - synchronous and single threaded call.
+
+// In asynchronous we use eventloop to manage the call stack
+// Asynchronous call using timer
+// set timeout
+// set immediate
+// set process.nextTick
+// set interval
