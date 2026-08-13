@@ -2,6 +2,7 @@ import readline from "readline/promises";
 import {stdin, stdout} from "process";
 import { writeFile, readFile, appendFile } from "fs/promises";
 import { log } from "console";
+import { join } from "path";
 
 //Database using file starts
 const FILE = "product.json";
@@ -35,6 +36,21 @@ const displayCart = async () => {
     const total = cart.reduce((sum,item)=>sum+item.price*item.qty,0);
     console.log(`Total payable amount Rs. ${total}`);
 };
+const removeProduct = async (pid)=>{
+    const cart = await getCart();
+    const isfoundInCart = cart.find((item) => item.id === pid);
+    let x = cart.length;
+    const newProduct = cart.filter((item)=> item.id !== pid);
+    let y = newProduct.length;
+    if(y<x){
+        console.log(`Product with id ${pid} is removed form cart`);
+        await saveCart(newProduct);
+    }
+    else{
+        console.log(`Product with id ${pid} not found`);
+    }
+};
+
 
 const main = async () => {
     let choice;
@@ -62,10 +78,12 @@ const main = async () => {
             });
             break;
         case 3:
-            console.log('remove product');
+            let pid = await cin.question("Enter product id : ");
+            await removeProduct(Number(pid));
             break;
         case 4:
-            console.log('update quantity');
+            pid = await cin.question("Enter product id : ");
+            await updateQuantity(Number(pid));            
             break;
         case 5:
             console.log('checkout');
