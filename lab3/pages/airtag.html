@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AirTag Tracker</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                   "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f5f5f7;
+      color: #1d1d1f;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      height: 70px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .airtag-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 17px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 25px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .menu a:hover {
+      color: #007aff;
+    }
+
+    /* Main */
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 25px;
+    }
+
+    .title {
+      margin-bottom: 25px;
+    }
+
+    .title h1 {
+      font-size: 38px;
+      margin-bottom: 6px;
+    }
+
+    .title p {
+      color: #777;
+    }
+
+    /* Layout */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 25px;
+    }
+
+    /* Map */
+    .map {
+      height: 520px;
+      border-radius: 25px;
+      overflow: hidden;
+      position: relative;
+
+      background:
+        linear-gradient(45deg, #dce8d8 25%, transparent 25%),
+        linear-gradient(-45deg, #dce8d8 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #dce8d8 75%),
+        linear-gradient(-45deg, transparent 75%, #dce8d8 75%);
+
+      background-size: 80px 80px;
+      background-position: 0 0, 0 40px, 40px -40px, -40px 0;
+
+      border: 1px solid #ddd;
+    }
+
+    .road {
+      position: absolute;
+      background: #fff;
+      transform: rotate(25deg);
+      width: 130%;
+      height: 45px;
+      top: 45%;
+      left: -15%;
+      box-shadow: 0 0 3px #bbb;
+    }
+
+    .road2 {
+      transform: rotate(-45deg);
+      top: 20%;
+    }
+
+    .location {
+      position: absolute;
+      top: 48%;
+      left: 55%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .pulse {
+      width: 70px;
+      height: 70px;
+      background: rgba(0,122,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+
+    .pin {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #007aff;
+      border: 5px solid white;
+      box-shadow: 0 3px 10px rgba(0,0,0,.25);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(.8);
+        opacity: .8;
+      }
+      70% {
+        transform: scale(1.4);
+        opacity: .2;
+      }
+      100% {
+        transform: scale(.8);
+        opacity: .8;
+      }
+    }
+
+    .map-label {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255,255,255,.9);
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 13px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
+
+    /* Right Panel */
+    .panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    }
+
+    .tag-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .tag-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: #111;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .tag-header h2 {
+      font-size: 21px;
+    }
+
+    .tag-header p {
+      color: #777;
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #eaf8ed;
+      color: #218838;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Info */
+    .info {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .info:last-child {
+      border-bottom: none;
+    }
+
+    .info span:first-child {
+      color: #777;
+    }
+
+    .info span:last-child {
+      font-weight: 600;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .sound {
+      background: #007aff;
+      color: white;
+    }
+
+    .find {
+      background: #f0f0f2;
+      color: #111;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: .9;
+    }
+
+    /* Battery */
+    .battery-container {
+      margin-top: 15px;
+    }
+
+    .battery-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .battery-bar {
+      height: 9px;
+      background: #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .battery-level {
+      width: 78%;
+      height: 100%;
+      background: #34c759;
+      border-radius: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 850px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .map {
+        height: 400px;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .title h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <div class="airtag-logo">⌾</div>
+      AirTag
+    </div>
+
+    <nav class="menu">
+      <a href="#">Items</a>
+      <a href="#">People</a>
+      <a href="#">Devices</a>
+      <a href="#">Account</a>
+    </nav>
+  </header>
+
+
+  <main>
+
+    <div class="title">
+      <h1>Find My</h1>
+      <p>Track your AirTag and keep your belongings close.</p>
+    </div>
+
+
+    <section class="dashboard">
+
+      <!-- MAP -->
+      <div class="map">
+
+        <div class="road"></div>
+        <div class="road road2"></div>
+
+        <div class="map-label">
+          📍 Last known location
+        </div>
+
+        <div class="location">
+          <div class="pulse">
+            <div class="pin"></div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- INFORMATION PANEL -->
+      <div class="panel">
+
+        <!-- Tag -->
+        <div class="card">
+
+          <div class="tag-header">
+
+            <div class="tag-icon">
+              ⌾
+            </div>
+
+            <div>
+              <h2>Daksh's Keys</h2>
+              <p>AirTag</p>
+            </div>
+
+          </div>
+
+          <div class="status" id="status">
+            ● Located just now
+          </div>
+
+          <div class="buttons">
+
+            <button class="sound" onclick="playSound()">
+              🔊 Play Sound
+            </button>
+
+            <button class="find" onclick="findNearby()">
+              🧭 Find Nearby
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Location -->
+        <div class="card">
+
+          <h3>Location</h3>
+
+          <div class="info">
+            <span>Distance</span>
+            <span id="distance">12 m away</span>
+          </div>
+
+          <div class="info">
+            <span>Last seen</span>
+            <span id="time">Just now</span>
+          </div>
+
+          <div class="info">
+            <span>Location</span>
+            <span>Ghaziabad, India</span>
+          </div>
+
+        </div>
+
+
+        <!-- Battery -->
+        <div class="card">
+
+          <h3>Battery</h3>
+
+          <div class="battery-container">
+
+            <div class="battery-top">
+              <span>Battery level</span>
+              <strong>78%</strong>
+            </div>
+
+            <div class="battery-bar">
+              <div class="battery-level"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Details -->
+        <div class="card">
+
+          <h3>AirTag Details</h3>
+
+          <div class="info">
+            <span>Item</span>
+            <span>Keys</span>
+          </div>
+
+          <div class="info">
+            <span>Tag ID</span>
+            <span>AT-2847</span>
+          </div>
+
+          <div class="info">
+            <span>Owner</span>
+            <span>Daksh</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    function playSound() {
+
+      const status = document.getElementById("status");
+
+      status.innerHTML = "🔊 Playing sound...";
+
+      setTimeout(() => {
+        status.innerHTML = "● Sound finished";
+      }, 3000);
+    }
+
+
+    function findNearby() {
+
+      const distance = document.getElementById("distance");
+      const status = document.getElementById("status");
+
+      status.innerHTML = "🧭 Searching nearby...";
+
+      setTimeout(() => {
+
+        distance.innerHTML = "4 m away";
+        status.innerHTML = "● AirTag found nearby";
+
+      }, 2000);
+    }
+
+
+    // Update "last seen" time
+    function updateTime() {
+
+      const time = document.getElementById("time");
+
+      const now = new Date();
+
+      time.innerHTML =
+        now.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+    }
+
+    updateTime();
+
+  </script>
+
+</body>
+</html>

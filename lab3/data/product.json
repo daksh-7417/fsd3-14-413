@@ -1,0 +1,102 @@
+[
+  {
+    "brand": "Apple",
+    "model": "iPhone 17",
+    "storage_gb": 256,
+    "ram_gb": 8,
+    "display_inches": 6.3,
+    "battery_mah": 3692,
+    "camera_mp": 48,
+    "os": "iOS"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Galaxy S26",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.3,
+    "battery_mah": 4300,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Google",
+    "model": "Pixel 10",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.3,
+    "battery_mah": 4970,
+    "camera_mp": 48,
+    "os": "Android"
+  },
+  {
+    "brand": "OnePlus",
+    "model": "OnePlus 13",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.82,
+    "battery_mah": 6000,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Xiaomi",
+    "model": "Xiaomi 15",
+    "storage_gb": 512,
+    "ram_gb": 12,
+    "display_inches": 6.36,
+    "battery_mah": 5240,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Vivo",
+    "model": "Vivo X200",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.67,
+    "battery_mah": 5800,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Oppo",
+    "model": "Find X8",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.59,
+    "battery_mah": 5630,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Nothing",
+    "model": "Phone 3",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.67,
+    "battery_mah": 5150,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Motorola",
+    "model": "Edge 60 Pro",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.7,
+    "battery_mah": 6000,
+    "camera_mp": 50,
+    "os": "Android"
+  },
+  {
+    "brand": "Realme",
+    "model": "GT 7",
+    "storage_gb": 256,
+    "ram_gb": 12,
+    "display_inches": 6.78,
+    "battery_mah": 7000,
+    "camera_mp": 50,
+    "os": "Android"
+  }
+]
