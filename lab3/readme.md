@@ -16,3 +16,8 @@ npm - node package manager
 403-forbidden
 
 404-Not found
+
+# content type
+text/plain
+text/html
+text/json
