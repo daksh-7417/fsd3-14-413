@@ -1,6 +1,6 @@
 import http from "http";
 // import * as teams from "teams.js";
-import { getAllTeams, addTeam, getTeamById } from "./teams.js";
+import { getAllTeams, addTeam, getTeamById, deleteTeam } from "./teams.js";
 import { parse as parseUrl } from "url";
 
 const PORT = 5000;
@@ -47,10 +47,31 @@ const server = http.createServer(async (req, res) => {
 
     return sendJson(res, 201, team, "Message", "Team registered successfully");
   } 
+  else if(pathname.startsWith("/api/v1/teams/")&& method === "GET"){
+    const id = Number(pathname.split("/").pop());
+    const team = getTeamById(id);
+
+    if(!team)
+      return sendJson(res,400 ,{
+    erro: `Team with id: ${id} not found`,});
+    return sendJson(res, 200, team, "Message", "Team Found");
+  }
+   else if(pathname.startsWith("/api/v1/teams/")&& method === "DELETE"){
+    const id = Number(pathname.split("/").pop());
+    const team = getTeamById(id);
+    
+    if(!team)
+      return sendJson(res, 404, {
+       error: `Team with id: ${id} not found`,
+    });
+    deleteTeam(id);
+
+    return sendJson(res, 200, team, "Message", "Team Found");
+  }
   
   else {
     res.statusCode = 404;
-    res.end();
+    res.end("Not matching");
   }
 });
 
