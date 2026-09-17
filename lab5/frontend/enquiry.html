@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enquiry - Music App</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: #000;
+      padding: 24px 18px;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 35px;
+    }
+
+    .menu a {
+      display: block;
+      color: #b3b3b3;
+      text-decoration: none;
+      padding: 13px 10px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      transition: 0.2s;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      color: white;
+      background: #1a1a1a;
+    }
+
+    .playlist {
+      margin-top: 30px;
+      border-top: 1px solid #282828;
+      padding-top: 20px;
+    }
+
+    .playlist h3 {
+      font-size: 13px;
+      color: #b3b3b3;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .playlist p {
+      color: #aaa;
+      font-size: 14px;
+      margin: 13px 0;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      background: linear-gradient(#202020, #121212);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .arrows button {
+      background: #111;
+      border: none;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 8px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .profile {
+      background: #181818;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .content {
+      max-width: 850px;
+      margin: auto;
+      padding: 40px 25px 100px;
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .heading .icon {
+      width: 70px;
+      height: 70px;
+      background: #1ed760;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 20px;
+    }
+
+    .heading h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .heading p {
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    /* Form */
+    .form-container {
+      background: #181818;
+      padding: 35px;
+      border-radius: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      background: #282828;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #1ed760;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #888;
+    }
+
+    textarea {
+      height: 140px;
+      resize: vertical;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    select option {
+      background: #282828;
+      color: white;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 30px;
+      background: #1ed760;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #1fdf64;
+      transform: scale(1.01);
+    }
+
+    .reset-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: 1px solid #555;
+      border-radius: 30px;
+      background: transparent;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .reset-btn:hover {
+      background: #282828;
+    }
+
+    .success {
+      display: none;
+      background: #1ed760;
+      color: #000;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 30px;
+      margin-top: 35px;
+      border-top: 1px solid #282828;
+    }
+
+    @media (max-width: 750px) {
+
+      .sidebar {
+        width: 70px;
+        padding: 20px 10px;
+      }
+
+      .logo {
+        font-size: 0;
+        text-align: center;
+      }
+
+      .logo::after {
+        content: "♫";
+        font-size: 25px;
+      }
+
+      .menu a {
+        font-size: 0;
+        text-align: center;
+      }
+
+      .playlist {
+        display: none;
+      }
+
+      .content {
+        padding: 25px 15px 80px;
+      }
+
+      .form-container {
+        padding: 25px 18px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .heading h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <div class="logo">♫ Music</div>
+
+      <nav class="menu">
+        <a href="index.html">⌂ Home</a>
+        <a href="#">⌕ Search</a>
+        <a href="#">▣ Your Library</a>
+        <a href="about.html">ⓘ About Us</a>
+        <a href="enquiry.html" class="active">✉ Enquiry</a>
+      </nav>
+
+      <div class="playlist">
+        <h3>Your Playlists</h3>
+        <p>+ Create Playlist</p>
+        <p>❤️ Liked Songs</p>
+        <p>Chill Vibes</p>
+        <p>Workout Mix</p>
+        <p>Late Night</p>
+      </div>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+      <header class="topbar">
+
+        <div class="arrows">
+          <button onclick="history.back()">‹</button>
+          <button onclick="history.forward()">›</button>
+        </div>
+
+        <div class="profile">👤 Guest</div>
+
+      </header>
+
+      <div class="content">
+
+        <div class="heading">
+
+          <div class="icon">✉</div>
+
+          <h1>Send Us an Enquiry</h1>
+
+          <p>
+            Have a question, suggestion, or feedback?
+            Fill out the form below and we'll get back to you.
+          </p>
+
+        </div>
+
+        <div class="form-container">
+
+          <div class="success" id="successMessage">
+            ✓ Thank you! Your enquiry has been submitted successfully.
+          </div>
+
+          <form id="enquiryForm">
+
+            <div class="row">
+
+              <div class="form-group">
+                <label for="name">Full Name</label>
+
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your name"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  required
+                >
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Enquiry Type</label>
+
+                <select id="subject" name="subject" required>
+                  <option value="">Select an option</option>
+                  <option value="general">General Enquiry</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="technical">Technical Support</option>
+                  <option value="playlist">Playlist Suggestion</option>
+                  <option value="business">Business Enquiry</option>
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="message">Your Message</label>
+
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Write your enquiry here..."
+                required
+              ></textarea>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+              Send Enquiry
+            </button>
+
+            <button type="reset" class="reset-btn">
+              Clear Form
+            </button>
+
+          </form>
+
+        </div>
+
+        <footer>
+          © 2026 Music App. All rights reserved.
+        </footer>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+
+    document
+      .getElementById("enquiryForm")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const successMessage =
+          document.getElementById("successMessage");
+
+        successMessage.style.display = "block";
+
+        this.reset();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      });
+
+  </script>
+
+</body>
+</html>
+
