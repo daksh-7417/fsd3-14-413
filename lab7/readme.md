@@ -53,3 +53,6 @@ const qtyStyle = {
   then apply with style attribute and pass the object
   
 3. inline - in this method we use 2 curly bracket with style attribute. All the CSS property must be sinlge word. for ex: text-align becomes textAlign(camel case)
+
+rafce - arrow
+rfce - function
