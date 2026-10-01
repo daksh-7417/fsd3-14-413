@@ -15,24 +15,28 @@ const b2 = {
 
 function Book(props){
   console.log(props);
+  const {bname,price,quantity,rating,picurl} = props.book
   return (
-    <div>
-    <img src={props.book.picurl} alt={props.book.bname} />
+    <div className="book">
+    <img src={picurl} alt={bname} />
     <h1>Let us react</h1>
-    <h2>Price : {props.book.price}</h2>
-    <h3>Quantity : {props.book.quantity} </h3>
-    <h4>rating : {props.book.rating} </h4>
+    <h2>Price : {price}</h2>
+    <h3>Quantity : {quantity} </h3>
+    <h4>rating : {rating} </h4>
+    <button>Buy Now</button>
     </div>
   );
 }
 export default function App(){
   return (
   <>
+  <h1>Online Bookstore</h1>
+  <div className="container">
   <Book book={b1} />
-  <h1>Hello React</h1>
   <Book book={b2} />
   <Book book={b1} />
   <Book book={b2} />
+  </div>
   </>
   );
 }
