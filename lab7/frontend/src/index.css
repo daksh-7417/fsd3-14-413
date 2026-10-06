@@ -88,7 +88,7 @@ body {
 .pen {
   display: grid;
   grid-template-columns: 170px minmax(0, 1fr);
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   gap: 0 26px;
   align-items: center;
   min-height: 330px;
@@ -210,7 +210,8 @@ body {
   color: #a16a22 !important;
 }
 
-.book button {
+.book button,
+.pen button {
   justify-self: start;
   margin-top: 12px;
   padding: 11px 19px;
@@ -228,12 +229,14 @@ body {
     transform 180ms ease;
 }
 
-.book button:hover {
+.book button:hover,
+.pen button:hover {
   background: #c15f39;
   transform: translateY(-2px);
 }
 
-.book button:focus-visible {
+.book button:focus-visible,
+.pen button:focus-visible {
   outline: 3px solid rgba(216, 121, 75, 0.45);
   outline-offset: 3px;
 }
@@ -294,7 +297,8 @@ body {
     font-size: 0.74rem;
   }
 
-  .book button {
+  .book button,
+  .pen button {
     margin-top: 8px;
     padding: 9px 13px;
     font-size: 0.75rem;

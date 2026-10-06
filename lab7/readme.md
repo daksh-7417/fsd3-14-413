@@ -56,3 +56,5 @@ const qtyStyle = {
 
 rafce - arrow
 rfce - function
+
+- app.jsx should contain the minimum code
