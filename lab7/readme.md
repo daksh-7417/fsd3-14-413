@@ -58,3 +58,4 @@ rafce - arrow
 rfce - function
 
 - app.jsx should contain the minimum code
+- by default button in html is submit buttond
