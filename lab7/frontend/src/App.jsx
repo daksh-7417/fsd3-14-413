@@ -6,20 +6,24 @@ import { pens } from "./data/pen";
 import fruit from "./components/Fruit";
 import Event from "./components/Event";
 
+const MyButton = ()=>{
+  let count = 1;
+  
+  const handleSubmit = ()=>{
+    console.log("button clicked", count);
+    count++;
+  };
+  return(
+    <button className="bg-black text-white text-xl rounded-md m-4
+     px-4 py-2 onClick={handleSubmit}">
+    Submit</button>
+  )
+}
+
 export default function App(){
   return (
   <>
-  <h1>Online Bookstore</h1>
-  <div className="container">
-  <Book book={books[0]} />
-  <Book book={books[1]} />
-  <Book book={books[0]} />
-  <Book book={books[1]} />
-  <Pen pen={pens[0]}/>
-  <Pen pen={pens[1]}/>
-  <Fruit />
-  <Event />
-  </div>
+  <MyButton/>
   </>
   );
 }
